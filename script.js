@@ -1,26 +1,26 @@
-const btn = document.getElementById('open-modal');
-const modal = document.getElementById('modal1');
+const openBtn = document.getElementById('open-modal');
+const modalOverlay = document.getElementById('modal1');
 const closeBtn = document.querySelector('.modal__close');
 
-btn.onclick = () => {
-    modal.classList.add('modal_active');
+openBtn.onclick = () => {
+    modalOverlay.classList.add('modal_active');
 
-    closeBtn.addEventListener('click', closeModal);
-    //тут же внутри обработчика навешиваем обработчик на кнопку закрытия, т.к. она понадобится, только в случае открытия окна. При клике выполнится ф-ция closeModal
+    closeBtn.addEventListener('click', hendleCloseButtonClick);
+    //тут же внутри обработчика навешиваем обработчик на кнопку закрытия, т.к. она понадобится, только в случае открытия окна. При клике выполнится ф-ция hendleCloseButtonClick
 
-    modal.addEventListener('click', hideModal);
+    modalOverlay.addEventListener('click', hendleModalOverlayClick);
     // таким жу образом вешаем прослушиватель клика и на модальное окно, что бы оно скрывалось и по клику на поле модального окна вокруг контента модального окна
 
-    function closeModal() {
-        modal.classList.remove('modal_active');
-        closeBtn.removeEventListener('click', closeModal);
-        modal.removeEventListener('click', hideModal);
+    function hendleCloseButtonClick() {
+        modalOverlay.classList.remove('modal_active');
+        closeBtn.removeEventListener('click', hendleCloseButtonClick);
+        modalOverlay.removeEventListener('click', hendleModalOverlayClick);
     }
-    // Пишем функцию closeModal: она прячет модальное окно, убирая класс активности и сразу же удаляет сам же обработчик-прослушиватель с кнопки закрытия, а так же с модального окна
+    // Пишем функцию hendleCloseButtonClick: она прячет модальное окно, убирая класс активности и сразу же удаляет сам же обработчик-прослушиватель с кнопки закрытия, а так же с модального окна
 
-    function hideModal (event) {
-        if(event.target === modal) { // если событие(клик) был по модальному окну target === modal, то его нужно закрыть:
-            closeModal();
+    function hendleModalOverlayClick (event) {
+        if(event.target === modalOverlay) { // если событие(клик) был по модальному окну target === modalOverlay, то его нужно закрыть:
+            hendleCloseButtonClick();
         }
     }
     // и вторую функцию. Тут нужно учесть "всплытие", чтобы она не срабатывавала по клику на "ребенка"(14 стр.)
